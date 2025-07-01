@@ -87,7 +87,7 @@ for tz in etcetera southamerica northamerica europe africa antarctica  \
 done
 
 cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
-zic -d $ZONEINFO -p America/New_York
+zic -d $ZONEINFO -p Asia/Jakarta
 unset ZONEINFO
 ln -sfv /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
@@ -290,7 +290,7 @@ begin mpfr-4.1.0 tar.xz
             --disable-static     \
             --enable-thread-safe \
             --docdir=/usr/share/doc/mpfr-4.1.0
-make
+make -j$(nproc)
 make html
 make install
 make install-html
@@ -301,7 +301,7 @@ begin mpc-1.2.1 tar.gz
 ./configure --prefix=/usr    \
             --disable-static \
             --docdir=/usr/share/doc/mpc-1.2.1
-make
+make -j$(nproc)
 make html
 make install
 make install-html
@@ -313,7 +313,7 @@ begin attr-2.5.1 tar.gz
             --disable-static  \
             --sysconfdir=/etc \
             --docdir=/usr/share/doc/attr-2.5.1
-make
+make -j$(nproc)
 make install
 finish
 
@@ -322,7 +322,7 @@ begin acl-2.3.1 tar.xz
 ./configure --prefix=/usr         \
             --disable-static      \
             --docdir=/usr/share/doc/acl-2.3.1
-make
+make -j$(nproc)
 make install
 finish
 
@@ -347,7 +347,7 @@ touch /usr/bin/passwd
 ./configure --sysconfdir=/etc \
             --disable-static  \
             --with-group-name-max-length=32
-make
+make -j$(nproc)
 make exec_prefix=/usr install
 make -C man install-man
 finish
@@ -368,7 +368,7 @@ cd       build
              --disable-multilib       \
              --disable-bootstrap      \
              --with-system-zlib
-make
+make -j$(nproc)
 make install
 chown -v -R root:root \
     /usr/lib/gcc/$(gcc -dumpmachine)/12.2.0/include{,-fixed}
@@ -394,7 +394,7 @@ begin pkg-config-0.29.2 tar.gz
             --with-internal-glib       \
             --disable-host-tool        \
             --docdir=/usr/share/doc/pkg-config-0.29.2
-make
+make -j$(nproc)
 make install
 finish
 
@@ -409,7 +409,7 @@ begin ncurses-6.3 tar.gz
             --enable-pc-files       \
             --enable-widec          \
             --with-pkg-config-libdir=/usr/lib/pkgconfig
-make
+make -j$(nproc)
 make DESTDIR=$PWD/dest install
 install -vm755 dest/usr/lib/libncursesw.so.6.3 /usr/lib
 rm -v  dest/usr/lib/libncursesw.so.6.3
@@ -429,7 +429,7 @@ finish
 # 8.29. Sed-4.8
 begin sed-4.8 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make html
 make install
 install -d -m755           /usr/share/doc/sed-4.8
@@ -439,7 +439,7 @@ finish
 # 8.30. Psmisc-23.5
 begin psmisc-23.5 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -448,7 +448,7 @@ begin gettext-0.21 tar.xz
 ./configure --prefix=/usr    \
             --disable-static \
             --docdir=/usr/share/doc/gettext-0.21
-make
+make -j$(nproc)
 make install
 chmod -v 0755 /usr/lib/preloadable_libintl.so
 finish
@@ -456,14 +456,14 @@ finish
 # 8.32. Bison-3.8.2
 begin bison-3.8.2 tar.xz
 ./configure --prefix=/usr --docdir=/usr/share/doc/bison-3.8.2
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.33. Grep-3.7
 begin grep-3.7 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -473,14 +473,14 @@ begin bash-5.1.16 tar.gz
             --docdir=/usr/share/doc/bash-5.1.16 \
             --without-bash-malloc              \
             --with-installed-readline
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.35. Libtool-2.4.7
 begin libtool-2.4.7 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 rm -fv /usr/lib/libltdl.a
 finish
@@ -490,14 +490,14 @@ begin gdbm-1.23 tar.gz
 ./configure --prefix=/usr    \
             --disable-static \
             --enable-libgdbm-compat
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.37. Gperf-3.1
 begin gperf-3.1 tar.gz
 ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.1
-make
+make -j$(nproc)
 make install
 finish
 
@@ -506,7 +506,7 @@ begin expat-2.4.8 tar.xz
 ./configure --prefix=/usr    \
             --disable-static \
             --docdir=/usr/share/doc/expat-2.4.8
-make
+make -j$(nproc)
 make install
 install -v -m644 doc/*.{html,css} /usr/share/doc/expat-2.4.8
 finish
@@ -523,7 +523,7 @@ begin inetutils-2.3 tar.xz
             --disable-rlogin     \
             --disable-rsh        \
             --disable-servers
-make
+make -j$(nproc)
 make install
 mv -v /usr/{,s}bin/ifconfig
 finish
@@ -531,7 +531,7 @@ finish
 # 8.40. Less-590
 begin less-590 tar.gz
 ./configure --prefix=/usr --sysconfdir=/etc
-make
+make -j$(nproc)
 make install
 finish
 
@@ -553,7 +553,7 @@ sh Configure -des                                         \
              -Dpager="/usr/bin/less -isR"                 \
              -Duseshrplib                                 \
              -Dusethreads
-make
+make -j$(nproc)
 make install
 unset BUILD_ZLIB BUILD_BZIP2
 finish
@@ -561,7 +561,7 @@ finish
 # 8.42. XML::Parser-2.46
 begin XML-Parser-2.46 tar.gz
 perl Makefile.PL
-make
+make -j$(nproc)
 make install
 finish
 
@@ -569,7 +569,7 @@ finish
 begin intltool-0.51.0 tar.gz
 sed -i 's:\\\${:\\\$\\{:' intltool-update.in
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 install -v -Dm644 doc/I18N-HOWTO /usr/share/doc/intltool-0.51.0/I18N-HOWTO
 finish
@@ -577,14 +577,14 @@ finish
 # 8.44. Autoconf-2.71
 begin autoconf-2.71 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.45. Automake-1.16.5
 begin automake-1.16.5 tar.xz
 ./configure --prefix=/usr --docdir=/usr/share/doc/automake-1.16.5
-make
+make -j$(nproc)
 make install
 finish
 
@@ -595,7 +595,7 @@ begin openssl-3.0.5 tar.gz
          --libdir=lib          \
          shared                \
          zlib-dynamic
-make
+make -j$(nproc)
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
 make MANSUFFIX=ssl install
 mv -v /usr/share/doc/openssl /usr/share/doc/openssl-3.0.5
@@ -610,7 +610,7 @@ begin kmod-30 tar.xz
             --with-xz              \
             --with-zstd            \
             --with-zlib
-make
+make -j$(nproc)
 make install
 for target in depmod insmod modinfo modprobe rmmod; do
   ln -sfv ../bin/kmod /usr/sbin/$target
@@ -623,7 +623,7 @@ begin elfutils-0.187 tar.bz2
 ./configure --prefix=/usr                \
             --disable-debuginfod         \
             --enable-libdebuginfod=dummy
-make
+make -j$(nproc)
 make -C libelf install
 install -vm644 config/libelf.pc /usr/lib/pkgconfig
 rm /usr/lib/libelf.a
@@ -635,7 +635,7 @@ begin libffi-3.4.2 tar.gz
             --disable-static       \
             --with-gcc-arch=native \
             --disable-exec-static-tramp
-make
+make -j$(nproc)
 make install
 finish
 
@@ -646,7 +646,7 @@ begin Python-3.10.6 tar.xz
             --with-system-expat  \
             --with-system-ffi    \
             --enable-optimizations
-make
+make -j$(nproc)
 make install
 cat > /etc/pip.conf << EOF
 [global]
@@ -695,7 +695,7 @@ autoreconf -fiv
 FORCE_UNSAFE_CONFIGURE=1 ./configure \
             --prefix=/usr            \
             --enable-no-install-program=kill,uptime
-make
+make -j$(nproc)
 make install
 mv -v /usr/bin/chroot /usr/sbin
 mv -v /usr/share/man/man1/chroot.1 /usr/share/man/man8/chroot.8
@@ -705,14 +705,14 @@ finish
 # 8.55. Check-0.15.2
 begin check-0.15.2 tar.gz
 ./configure --prefix=/usr --disable-static
-make
+make -j$(nproc)
 make docdir=/usr/share/doc/check-0.15.2 install
 finish
 
 # 8.56. Diffutils-3.8
 begin diffutils-3.8 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -720,7 +720,7 @@ finish
 begin gawk-5.1.1 tar.xz
 sed -i 's/extras//' Makefile.in
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 mkdir -pv                                   /usr/share/doc/gawk-5.1.1
 cp    -v doc/{awkforai.txt,*.{eps,pdf,jpg}} /usr/share/doc/gawk-5.1.1
@@ -732,7 +732,7 @@ case $(uname -m) in
     i?86)   TIME_T_32_BIT_OK=yes ./configure --prefix=/usr --localstatedir=/var/lib/locate ;;
     x86_64) ./configure --prefix=/usr --localstatedir=/var/lib/locate ;;
 esac
-make
+make -j$(nproc)
 make install
 finish
 
@@ -749,7 +749,7 @@ begin grub-2.06 tar.xz
             --sysconfdir=/etc      \
             --disable-efiemu       \
             --disable-werror
-make
+make -j$(nproc)
 make install
 mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions
 finish
@@ -757,7 +757,7 @@ finish
 # 8.61. Gzip-1.12
 begin gzip-1.12 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -782,21 +782,21 @@ finish
 # 8.64. Libpipeline-1.5.6
 begin libpipeline-1.5.6 tar.gz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.65. Make-4.3
 begin make-4.3 tar.gz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.66. Patch-2.7.6
 begin patch-2.7.6 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -804,7 +804,7 @@ finish
 begin tar-1.34 tar.xz
 FORCE_UNSAFE_CONFIGURE=1  \
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 make -C doc install-html docdir=/usr/share/doc/tar-1.34
 finish
@@ -812,7 +812,7 @@ finish
 # 8.68. Texinfo-6.8
 begin texinfo-6.8 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 make TEXMF=/usr/share/texmf install-tex
 pushd /usr/share/info
@@ -827,7 +827,7 @@ finish
 begin vim-9.0.0228 tar.gz
 echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 ln -sv vim /usr/bin/vi
 for L in  /usr/share/man/{,*/}man1/vim.1; do
@@ -860,7 +860,7 @@ begin eudev-3.2.11 tar.gz
             --sysconfdir=/etc       \
             --enable-manpages       \
             --disable-static
-make
+make -j$(nproc)
 mkdir -pv /usr/lib/udev/rules.d
 mkdir -pv /etc/udev/rules.d
 make install
@@ -881,7 +881,7 @@ begin man-db-2.10.2 tar.xz
             --with-grap=/usr/bin/grap             \
             --with-systemdtmpfilesdir=            \
             --with-systemdsystemunitdir=
-make
+make -j$(nproc)
 make install
 finish
 
@@ -891,7 +891,7 @@ begin procps-ng-4.0.0 tar.xz
             --docdir=/usr/share/doc/procps-ng-4.0.0 \
             --disable-static                         \
             --disable-kill
-make
+make -j$(nproc)
 make install
 finish
 
@@ -913,7 +913,7 @@ begin util-linux-2.38.1 tar.xz
             --without-python     \
             --without-systemd    \
             --without-systemdsystemunitdir
-make
+make -j$(nproc)
 make install
 finish
 
@@ -928,7 +928,7 @@ cd       build
              --disable-libuuid       \
              --disable-uuidd         \
              --disable-fsck
-make
+make -j$(nproc)
 make install
 rm -fv /usr/lib/{libcom_err,libe2p,libext2fs,libss}.a
 gunzip -v /usr/share/info/libext2fs.info.gz
@@ -942,7 +942,7 @@ finish
 begin sysklogd-1.5.1 tar.gz
 sed -i '/Error loading kernel symbols/{n;n;d}' ksym_mod.c
 sed -i 's/union wait/int/' syslogd.c
-make
+make -j$(nproc)
 make BINDIR=/sbin install
 cat > /etc/syslog.conf << "EOF"
 # Begin /etc/syslog.conf
@@ -962,7 +962,7 @@ finish
 # 8.76. Sysvinit-3.04
 begin sysvinit-3.04 tar.xz
 patch -Np1 -i ../sysvinit-3.04-consolidated-1.patch
-make
+make -j$(nproc)
 make install
 finish
 
