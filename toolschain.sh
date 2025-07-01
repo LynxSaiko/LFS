@@ -1,8 +1,5 @@
 #!/bin/bash
-# LFS 11.2 Build Script
-# Builds the cross-toolchain and cross compiling temporary tools from chapters 5 and 6
-# by Luís Mendes :)
-# 06/Sep/2022
+# [+] Author: LynxSaiko
 export LFS=/mnt/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export PATH="$LFS/tools/bin:$PATH"
