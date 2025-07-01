@@ -57,9 +57,9 @@ users:x:999:
 nogroup:x:65534:
 EOF
 
-echo "leak:x:101:101::/home/leak:/bin/bash" >> /etc/passwd
-echo "leak:x:101:" >> /etc/group
-install -o leak -d /home/leak
+echo "leakos:x:101:101::/home/leakos:/bin/bash" >> /etc/passwd
+echo "leakos:x:101:" >> /etc/group
+install -o leakos -d /home/leakos
 touch /var/log/{btmp,lastlog,faillog,wtmp}
 chgrp -v utmp /var/log/lastlog
 chmod -v 664  /var/log/lastlog
