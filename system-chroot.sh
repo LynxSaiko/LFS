@@ -43,7 +43,7 @@ echo "rootsbindir=/usr/sbin" > configparms
              --enable-stack-protector=strong          \
              --with-headers=/usr/include              \
              libc_cv_slibdir=/usr/lib
-make
+make -j$(nproc)
 touch /etc/ld.so.conf
 sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
 make install
@@ -110,7 +110,7 @@ finish
 # 8.6. Zlib-1.2.12
 begin zlib-1.2.12 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 rm -fv /usr/lib/libz.a
 finish
@@ -122,7 +122,7 @@ sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
 sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 make -f Makefile-libbz2_so
 make clean
-make
+make -j$(nproc)
 make PREFIX=/usr install
 cp -av libbz2.so.* /usr/lib
 ln -sv libbz2.so.1.0.8 /usr/lib/libbz2.so
@@ -138,7 +138,7 @@ begin xz-5.2.6 tar.xz
 ./configure --prefix=/usr    \
             --disable-static \
             --docdir=/usr/share/doc/xz-5.2.6
-make
+make -j$(nproc)
 make install
 finish
 
@@ -153,7 +153,7 @@ finish
 # 8.10. File-5.42
 begin file-5.42 tar.gz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -173,14 +173,14 @@ finish
 # 8.12. M4-1.4.19
 begin m4-1.4.19 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
 # 8.13. Bc-6.0.1
 begin bc-6.0.1 tar.xz
 CC=gcc ./configure --prefix=/usr -G -O3 -r
-make
+make -j$(nproc)
 make install
 finish
 
@@ -189,7 +189,7 @@ begin flex-2.6.4 tar.gz
 ./configure --prefix=/usr \
             --docdir=/usr/share/doc/flex-2.6.4 \
             --disable-static
-make
+make -j$(nproc)
 make install
 ln -sv flex /usr/bin/lex
 finish
@@ -202,7 +202,7 @@ SRCDIR=$(pwd)
 cd unix
 ./configure --prefix=/usr           \
             --mandir=/usr/share/man
-make
+make -j$(nproc)
 
 sed -e "s|$SRCDIR/unix|/usr/lib|" \
     -e "s|$SRCDIR|/usr/include|"  \
@@ -236,7 +236,7 @@ begin expect5.45.4 tar.gz
             --enable-shared         \
             --mandir=/usr/share/man \
             --with-tclinclude=/usr/include
-make
+make -j$(nproc)
 make install
 ln -svf expect5.45.4/libexpect5.45.4.so /usr/lib
 finish
@@ -278,7 +278,7 @@ begin gmp-6.2.1 tar.xz
             --enable-cxx     \
             --disable-static \
             --docdir=/usr/share/doc/gmp-6.2.1
-make
+make -j$(nproc)
 make html
 make install
 make install-html
