@@ -89,7 +89,7 @@ done
 cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
 zic -d $ZONEINFO -p America/New_York
 unset ZONEINFO
-ln -sfv /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+ln -sfv /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 cat > /etc/ld.so.conf << "EOF"
 # Begin /etc/ld.so.conf
