@@ -3,29 +3,6 @@
 # Builds the basic system software from chapter 8
 # by Luís Mendes :)
 # 07/Sep/2022
-
-package_name=""
-package_ext=""
-
-begin() {
-	package_name=$1
-	package_ext=$2
-
-	echo "[lfs-system] Starting build of $package_name at $(date)"
-
-	tar xf $package_name.$package_ext
-	cd $package_name
-}
-
-finish() {
-	echo "[lfs-system] Finishing build of $package_name at $(date)"
-
-	cd /sources
-	rm -rf $package_name
-}
-
-cd /sources
-
 # 8.78. Stripping
 save_usrlib="$(cd /usr/lib; ls ld-linux*[^g])
              libc.so.6
