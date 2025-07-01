@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# [+] Author: LynxSaiko
 # Pastikan variabel $LFS sudah diset
 if [ -z "$LFS" ]; then
   echo "Variabel \$LFS belum diset. Jalankan: export LFS=/mnt/lfs"
