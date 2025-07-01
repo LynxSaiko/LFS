@@ -1,8 +1,4 @@
 #!/bin/bash
-# LFS 11.2 Build Script
-# Builds the additional temporary tools from chapter 7
-# by Luís Mendes :)
-# 06/Sep/2022
 
 package_name=""
 package_ext=""
