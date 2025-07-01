@@ -74,10 +74,25 @@ disable-pip-version-check = true
 root-user-action = ignore
 EOF
 # Symlink eksplisit
-ln -sfv /usr/bin/python3 /usr/bin/python3.10
-ln -sfv /usr/bin/pip3    /usr/bin/pip3.10
+ln -sfv /usr/bin/python3
+ln -sfv /usr/bin/pip3
 finish
 
+
+echo "[python2] Configuring..."
+begin Python-2.7.18.tar.xz
+./configure --prefix=/usr              \
+            --enable-shared            \
+            --with-system-expat        \
+            --with-system-ffi          \
+            --enable-unicode=ucs4      \
+            --with-ensurepip=yes
+
+make -j$(nproc)
+make install
+ln -sfv /usr/bin/python2
+ln -sfv /usr/bin/pip2
+finish
 
 echo "[ruby2] Configuring..."
 begin ruby-2.7.8.tar.gz
@@ -93,6 +108,7 @@ make -j$(nproc)
 make install
 finish
 
+
 # Symlink untuk ruby2 & ruby3
 ln -sfv /usr/bin/ruby2.7 /usr/bin/ruby2
 ln -sfv /usr/bin/gem2.7  /usr/bin/gem2
@@ -101,9 +117,9 @@ ln -sfv /usr/bin/irb2.7  /usr/bin/irb2
 ln -sfv /usr/bin/ruby3.3 /usr/bin/ruby3
 ln -sfv /usr/bin/gem3.3  /usr/bin/gem3
 ln -sfv /usr/bin/irb3.3  /usr/bin/irb3
-
-
 # 7.11. Texinfo-6.8
+
+echo "texinfo"
 begin texinfo-6.8 tar.xz
 ./configure --prefix=/usr
 make
