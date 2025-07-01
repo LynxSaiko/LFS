@@ -185,7 +185,7 @@ cat > /etc/fstab << "EOF"
 # file system  mount-point  type     options             dump  fsck
 #                                                              order
 
-UUID=d517ac8f-5aab-4a42-a643-24733a38169d /      ext4    defaults    1 1
+UUID=d517ac8f-5aab-44a2-a643-24733a38169d /      ext4    defaults    1 1
 proc           /proc        proc     nosuid,noexec,nodev 0     0
 sysfs          /sys         sysfs    nosuid,noexec,nodev 0     0
 devpts         /dev/pts     devpts   gid=5,mode=620      0     0
@@ -229,10 +229,10 @@ set default=0
 set timeout=5
 insmod ext2
 
-search --no-floppy --fs-uuid --set=root d517ac8f-5aab-4a42-a643-24733a38169d
+search --no-floppy --fs-uuid --set=root d517ac8f-5aab-44a2-a643-24733a38169d
 
 menuentry "LFS 11.2" {
-    linux /boot/vmlinuz-5.19.2-lfs-11.2 root=UUID=d517ac8f-5aab-4a42-a643-24733a38169d ro
+    linux /boot/vmlinuz-5.19.2-lfs-11.2 root=UUID=d517ac8f-5aab-44a2-a643-24733a38169d ro
 }
 EOF
 
