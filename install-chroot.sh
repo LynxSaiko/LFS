@@ -25,7 +25,7 @@ cd /sources
 # 7.7. Gettext-0.21
 begin gettext-0.21 tar.xz
 ./configure --disable-shared
-make
+make -j$(nproc)
 cp -v gettext-tools/src/{msgfmt,msgmerge,xgettext} /usr/bin
 finish
 
@@ -33,7 +33,7 @@ finish
 begin bison-3.8.2 tar.xz
 ./configure --prefix=/usr \
             --docdir=/usr/share/doc/bison-3.8.2
-make
+make -j$(nproc)
 make install
 finish
 
@@ -48,7 +48,7 @@ sh Configure -des                                        \
              -Dsitearch=/usr/lib/perl5/5.36/site_perl    \
              -Dvendorlib=/usr/lib/perl5/5.36/vendor_perl \
              -Dvendorarch=/usr/lib/perl5/5.36/vendor_perl
-make
+make -j$(nproc)
 make install
 finish
 
