@@ -202,6 +202,13 @@ mv -v $LFS/usr/share/man/man1/chroot.1 $LFS/usr/share/man/man8/chroot.8
 sed -i 's/"1"/"8"/'                    $LFS/usr/share/man/man8/chroot.8
 finish
 
+begin nano-6.2.tar.xz
+./configure --prefix=/usr 
+            --host=$LFS_TGT
+            --sysconfdir=/etc
+make -j$(nproc)
+make DESTDIR=$LFS install
+
 # 6.6. Diffutils-3.8
 begin diffutils-3.8 tar.xz
 ./configure --prefix=/usr --host=$LFS_TGT
