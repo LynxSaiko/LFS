@@ -247,9 +247,9 @@ EOF
 
 cat > /etc/os-release << "EOF"
 NAME="LeakOS"
-VERSION="11.2 (Shadow)"
+VERSION="v1 (Shadow)"
 ID=leakos
-PRETTY_NAME="LeakOS 11.2 (Shadow Edition) – Sistem Operasi dari Dunia Bawah"
+PRETTY_NAME="LeakOS V1 (Shadow Edition)"
 VERSION_ID="v1"
 HOME_URL="https://leakos.darknet"
 SUPPORT_URL="https://leakos.darknet/support"
