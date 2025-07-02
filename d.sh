@@ -45,7 +45,7 @@ set default=0
 set timeout=5
 
 insmod ext2
-set root=(hd0,1)
+set root=(hd0,2)
 
 menuentry "LeakOS (Auto Fixed)" {
     linux /boot/\$BOOT_KERNEL_FILE root=/dev/sda2 ro
