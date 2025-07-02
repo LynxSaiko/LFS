@@ -1,8 +1,5 @@
 #!/bin/bash
-# LFS 11.2 Build Script
-# Final steps to configure the system
-# by Luís Mendes :)
-# 07/Sep/2022
+# [+] Author: LynxSaiko
 
 package_name=""
 package_ext=""
