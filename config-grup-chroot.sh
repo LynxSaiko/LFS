@@ -218,40 +218,6 @@ install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
 # End /etc/modprobe.d/usb.conf
 EOF
 
-# 10.4. Using GRUB to Set Up the Boot Process
-grub-install /dev/sda
-cat > /boot/grub/grub.cfg << "EOF"
-# Begin /boot/grub/grub.cfg
-set default=0
-set timeout=5
-
-insmod ext2
-set root=(hd0,1)
-
-menuentry "LeakOS V1 (Shadow Edition)" {
-        linux   /boot/vmlinuz-leakos root=/dev/sda2 ro
-}
-EOF
-
-# 11.1. The End
-echo v1 > /etc/leakos-release
-cat > /etc/lsb-release << "EOF"
-DISTRIB_ID="LeakOS"
-DISTRIB_RELEASE="v1"
-DISTRIB_CODENAME="Shadow"
-DISTRIB_DESCRIPTION="LeakOS ID"
-EOF
-
-cat > /etc/os-release << "EOF"
-NAME="LeakOS"
-VERSION="v1 (Shadow)"
-ID=leakos
-PRETTY_NAME="LeakOS V1 (Shadow Edition)"
-VERSION_ID="v1"
-HOME_URL="https://leakos.darknet"
-SUPPORT_URL="https://leakos.darknet/support"
-BUG_REPORT_URL="https://leakos.darknet/void"
-EOF
 
 
 echo "[lfs-final] The end"
