@@ -1,53 +1,62 @@
 #!/bin/bash
 
-# AUTO GRUB CONFIG GENERATOR UNTUK LFS / LeakOS
-# Kompatibel dengan GRUB BIOS (i386-pc)
+# LeakOS GRUB Auto Fix (BIOS - MBR)
+# Kompatibel LFS 11.2 / LeakOS
+# Jalankan dari LiveCD (BlackArch, Debian, dsb)
 
 set -e
 
-### === KONFIGURASI === ###
-LFS_MOUNT=/mnt
-BOOTDIR="$LFS_MOUNT/boot"
-GRUBDIR="$BOOTDIR/grub"
-GRUBCFG="$GRUBDIR/grub.cfg"
+### === KONFIGURASI DASAR === ###
+ROOT_PART="/dev/sda2"
+DISK="/dev/sda"
+LFS="/mnt"
 
-echo "📦 Mendeteksi kernel di $BOOTDIR ..."
-KERNEL=$(ls "$BOOTDIR"/vmlinuz-* 2>/dev/null | head -n1)
-KERNEL_FILE=$(basename "$KERNEL")
+echo "📦 Mounting root LeakOS: $ROOT_PART → $LFS"
+mount "$ROOT_PART" "$LFS"
 
-if [[ -z "$KERNEL_FILE" ]]; then
-    echo "❌ Kernel tidak ditemukan di $BOOTDIR"
+for dir in dev proc sys run; do
+    mount --bind /$dir $LFS/$dir
+done
+
+### === CHROOT DAN INSTAL GRUB === ###
+echo "🚀 Masuk ke chroot dan install GRUB..."
+chroot "$LFS" /usr/bin/env -i \
+    HOME=/root TERM="$TERM" PS1='(leakos chroot) \u:\w\$ ' \
+    PATH=/bin:/usr/bin:/sbin:/usr/sbin \
+    /bin/bash --login << 'EOF'
+
+# Langkah 1: install grub ke MBR
+echo "💾 Menginstal GRUB ke /dev/sda ..."
+grub-install --target=i386-pc /dev/sda
+
+# Langkah 2: deteksi kernel
+BOOT_KERNEL=\$(ls /boot/vmlinuz-* 2>/dev/null | head -n1)
+BOOT_KERNEL_FILE=\$(basename "\$BOOT_KERNEL")
+
+if [[ -z "\$BOOT_KERNEL_FILE" ]]; then
+    echo "❌ Kernel tidak ditemukan di /boot"
     exit 1
 fi
 
-echo "🖴 Mendeteksi partisi root LeakOS ..."
-ROOT_DEVICE=$(findmnt -n -o SOURCE --target "$LFS_MOUNT")
-
-if [[ -z "$ROOT_DEVICE" ]]; then
-    echo "❌ Gagal mendeteksi device /mnt"
-    exit 1
-fi
-
-# Ambil angka partisi, misal /dev/sda2 → 2
-PART_NUM=$(echo "$ROOT_DEVICE" | grep -o '[0-9]*$')
-GRUB_INDEX=$((PART_NUM - 1))
-
-### === Buat GRUB CFG === ###
-mkdir -p "$GRUBDIR"
-
-cat > "$GRUBCFG" << EOF
+# Langkah 3: generate grub.cfg
+echo "⚙️ Menulis grub.cfg ..."
+cat > /boot/grub/grub.cfg << EOF_CFG
 set default=0
 set timeout=5
 
 insmod ext2
-set root=(hd0,$GRUB_INDEX)
+set root=(hd0,1)
 
-menuentry "LeakOS V1 (Shadow Edition)" {
-    linux /boot/$KERNEL_FILE root=$ROOT_DEVICE ro
+menuentry "LeakOS (Auto Fixed)" {
+    linux /boot/\$BOOT_KERNEL_FILE root=/dev/sda2 ro
 }
+EOF_CFG
+
+echo "✅ GRUB LeakOS berhasil diperbaiki!"
 EOF
 
-echo "✅ grub.cfg berhasil dibuat:"
-echo "   → $GRUBCFG"
-echo "   → Kernel: $KERNEL_FILE"
-echo "   → Root: $ROOT_DEVICE → GRUB root: (hd0,$GRUB_INDEX)"
+### === UNMOUNT & SELESAI === ###
+echo "🔧 Unmount semua..."
+umount -Rv "$LFS"
+
+echo "✅ LeakOS GRUB FIX selesai. Silakan reboot."
