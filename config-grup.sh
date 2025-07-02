@@ -185,7 +185,7 @@ cat > /etc/fstab << "EOF"
 # file system  mount-point  type     options             dump  fsck
 #                                                              order
 
-UUID=d517ac8f-5aab-44a2-a643-24733a38169d /      ext4    defaults    1 1
+/dev/sda2       /           ext4     defaults            1     1
 proc           /proc        proc     nosuid,noexec,nodev 0     0
 sysfs          /sys         sysfs    nosuid,noexec,nodev 0     0
 devpts         /dev/pts     devpts   gid=5,mode=620      0     0
@@ -222,34 +222,39 @@ install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
 EOF
 
 # 10.4. Using GRUB to Set Up the Boot Process
-grub-install /dev/sdb
+grub-install /dev/sda
 cat > /boot/grub/grub.cfg << "EOF"
 # Begin /boot/grub/grub.cfg
 set default=0
 set timeout=5
+
 insmod ext2
+set root=(hd0,2)
 
-search --no-floppy --fs-uuid --set=root d517ac8f-5aab-44a2-a643-24733a38169d
-
-menuentry "LFS 11.2" {
-    linux /boot/vmlinuz-5.19.2-lfs-11.2 root=UUID=d517ac8f-5aab-44a2-a643-24733a38169d ro
+menuentry "GNU/Linux, Linux 5.19.2-lfs-11.2" {
+        linux   /boot/vmlinuz-5.19.2-lfs-11.2 root=/dev/sda2 ro
 }
 EOF
 
 # 11.1. The End
 echo 11.2 > /etc/lfs-release
 cat > /etc/lsb-release << "EOF"
-DISTRIB_ID="Linux From Scratch"
-DISTRIB_RELEASE="11.2"
-DISTRIB_CODENAME="Linux From Scratch"
-DISTRIB_DESCRIPTION="Linux From Scratch"
+DISTRIB_ID="LeakOS"
+DISTRIB_RELEASE="v1"
+DISTRIB_CODENAME="Shadow"
+DISTRIB_DESCRIPTION="LeakOS ID"
 EOF
+
 cat > /etc/os-release << "EOF"
-NAME="Linux From Scratch"
-VERSION="11.2
-ID=lfs
-PRETTY_NAME="Linux From Scratch 11.2"
-VERSION_CODENAME="Linux From Scratch"
+NAME="LeakOS"
+VERSION="11.2 (Shadow)"
+ID=leakos
+PRETTY_NAME="LeakOS 11.2 (Shadow Edition) – Sistem Operasi dari Dunia Bawah"
+VERSION_ID="v1"
+HOME_URL="https://leakos.darknet"
+SUPPORT_URL="https://leakos.darknet/support"
+BUG_REPORT_URL="https://leakos.darknet/void"
 EOF
+
 
 echo "[lfs-final] The end"
