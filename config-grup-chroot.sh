@@ -234,7 +234,7 @@ menuentry "LeakOS V1 (Shadow Edition)" {
 EOF
 
 # 11.1. The End
-echo 11.2 > /etc/lfs-release
+echo v1 > /etc/leakos-release
 cat > /etc/lsb-release << "EOF"
 DISTRIB_ID="LeakOS"
 DISTRIB_RELEASE="v1"
