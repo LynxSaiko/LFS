@@ -65,7 +65,7 @@ finish
 echo "texinfo"
 begin texinfo-6.8 tar.xz
 ./configure --prefix=/usr
-make
+make -j$(nproc)
 make install
 finish
 
@@ -85,7 +85,7 @@ mkdir -pv /var/lib/hwclock
             --disable-static     \
             --without-python     \
             runstatedir=/run
-make
+make -j$(nproc)
 make install
 finish
 
