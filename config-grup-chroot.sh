@@ -200,7 +200,7 @@ make mrproper
 make defconfig
 make -j$(nproc)
 make modules_install
-cp -iv arch/x86/boot/bzImage /boot/vmlinuz-5.19.2-lfs-11.2
+cp -iv arch/x86/boot/bzImage /boot/vmlinuz-leakos
 cp -iv System.map /boot/System.map-5.19.2
 cp -iv .config /boot/config-5.19.2
 install -d /usr/share/doc/linux-5.19.2
@@ -229,7 +229,7 @@ insmod ext2
 set root=(hd0,2)
 
 menuentry "LeakOS V1 (Shadow Edition)" {
-        linux   /boot/vmlinuz-5.19.2-lfs-11.2 root=/dev/sda2 ro
+        linux   /boot/vmlinuz-leakos root=/dev/sda2 ro
 }
 EOF
 
