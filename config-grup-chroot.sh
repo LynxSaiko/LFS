@@ -198,7 +198,7 @@ cd /sources
 begin linux-5.19.2 tar.xz
 make mrproper
 make defconfig
-make
+make -j$(nproc)
 make modules_install
 cp -iv arch/x86/boot/bzImage /boot/vmlinuz-5.19.2-lfs-11.2
 cp -iv System.map /boot/System.map-5.19.2
