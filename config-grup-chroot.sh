@@ -226,7 +226,7 @@ set default=0
 set timeout=5
 
 insmod ext2
-set root=(hd0,2)
+set root=(hd0,1)
 
 menuentry "LeakOS V1 (Shadow Edition)" {
         linux   /boot/vmlinuz-leakos root=/dev/sda2 ro
