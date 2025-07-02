@@ -57,7 +57,7 @@ begin Python-3.10.6 tar.xz
 ./configure --prefix=/usr   \
             --enable-shared \
             --without-ensurepip
-make
+make -j$(nproc)
 make install
 finish
 
