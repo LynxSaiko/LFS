@@ -23,11 +23,6 @@ finish() {
 
 cd /sources
 
-# 9.2. LFS-Bootscripts-20220723
-begin lfs-bootscripts-20220723.tar.xz
-make install
-finish
-
 # 9.4.1.2. Creating Custom Udev Rules
 bash /usr/lib/udev/init-net-rules.sh
 
