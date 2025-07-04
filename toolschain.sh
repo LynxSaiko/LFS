@@ -2,9 +2,8 @@
 # [+] Author: LynxSaiko
 export LFS=/mnt/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
-export PATH="$LFS/tools/bin:/bin:/usr/bin:$PATH"
-
-
+export PATH="$LFS/tools/bin:/bin:/usr/bin:/sbin:$PATH"
+unset CXX CC AR AS LD RANLIB STRIP
 cd sources
 
 package_name=""
