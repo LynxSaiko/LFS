@@ -34,5 +34,7 @@ umask 022
 LFS=/mnt/lfs
 LC_ALL=POSIX
 LFS_TGT=$(uname -m)-lfs-linux-gnu
+PATH="$LFS/tools/bin:/bin:/usr/bin:$PATH"
 export LFS LC_ALL LFS_TGT PATH MAKEFLAGS
 EOF
+source ~/.bash_profile
