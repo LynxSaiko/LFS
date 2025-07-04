@@ -202,6 +202,17 @@ install -d /usr/share/doc/linux-5.19.2
 cp -r Documentation/* /usr/share/doc/linux-5.19.2
 finish
 
+cat > /boot/grub/grub.cfg << "EOF"
+set default=0
+set timeout=5
+
+menuentry "LFS 11.2" {
+    linux /boot/vmlinuz-leakos root=/dev/sda2 ro
+}
+EOF
+
+
+
 # 10.3.2. Configuring Linux Module Load Order
 install -v -m755 -d /etc/modprobe.d
 cat > /etc/modprobe.d/usb.conf << "EOF"
