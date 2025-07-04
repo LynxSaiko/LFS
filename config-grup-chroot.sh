@@ -49,7 +49,7 @@ nameserver 8.8.4.4
 EOF
 
 # 9.5.3. Configuring the system hostname
-echo "lfs" > /etc/hostname
+echo "leakos" > /etc/hostname
 
 # 9.5.4. Customizing the /etc/hosts File
 cat > /etc/hosts << "EOF"
