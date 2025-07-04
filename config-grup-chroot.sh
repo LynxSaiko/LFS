@@ -206,7 +206,7 @@ cat > /boot/grub/grub.cfg << "EOF"
 set default=0
 set timeout=5
 
-menuentry "LFS 11.2" {
+menuentry "LeakOS V1 (Shadow Edition)" {
     linux /boot/vmlinuz-leakos root=/dev/sda2 ro
 }
 EOF
