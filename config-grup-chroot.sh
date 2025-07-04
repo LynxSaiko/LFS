@@ -210,7 +210,7 @@ menuentry "LeakOS V1 (Shadow Edition)" {
     linux /boot/vmlinuz-leakos root=/dev/sda2 ro
 }
 EOF
-
+grub-install /dev/sda
 # 10.3.2. Configuring Linux Module Load Order
 install -v -m755 -d /etc/modprobe.d
 cat > /etc/modprobe.d/usb.conf << "EOF"
