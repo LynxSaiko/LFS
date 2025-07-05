@@ -1,0 +1,10 @@
+cat > /etc/wpa_supplicant.conf << "EOF"
+ctrl_interface=/run/wpa_supplicant
+update_config=1
+country=ID
+
+network={
+    ssid="Doobiedump"
+    psk="Onexxone"
+}
+EOF
