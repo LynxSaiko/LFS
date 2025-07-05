@@ -1,0 +1,17 @@
+--- syslogd.c.old	2007-10-16 14:30:00.000000000 +0000
++++ syslogd.c	2025-07-05 19:30:00.000000000 +0000
+@@ -2094,7 +2094,11 @@
+ static void
+ reapchild(void)
+ {
+-    union wait status;
++    int status;
++
++    /*
++     * Modern systems use int status instead of union wait.
++     * The wait function works fine with int for exit status.
++     */
+
+     while (wait3(&status, WNOHANG, (struct rusage *)0) > 0)
+ 	;
+  
