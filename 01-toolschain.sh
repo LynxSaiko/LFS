@@ -362,3 +362,4 @@ make -j$(nproc)
 make DESTDIR=$LFS install
 ln -sv gcc $LFS/usr/bin/cc
 finish
+exit
