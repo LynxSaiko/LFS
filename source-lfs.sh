@@ -21,3 +21,5 @@ fi
 
 # Tampilkan ukuran file
 du -h "$FILENAME"
+mv 11.2-rc1 sources && mv sources $LFS
+chmod -v a+wt $LFS/sources
