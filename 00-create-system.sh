@@ -24,6 +24,8 @@ if [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 echo "Struktur direktori dasar LFS berhasil dibuat di: $LFS"
+
+echo "Membuat User Lfs"
 groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs
 passwd lfs
