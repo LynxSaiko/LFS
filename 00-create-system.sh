@@ -32,3 +32,6 @@ passwd lfs
 
 chown -R lfs:lfs $LFS/*
 chown lfs:lfs $LFS
+
+echo "Masuk Ke User Lfs"
+su - lfs
