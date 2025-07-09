@@ -23,6 +23,8 @@ finish() {
 
 cd /sources
 
+#install lfs-bootscripts
+
 # 9.4.1.2. Creating Custom Udev Rules
 bash /usr/lib/udev/init-net-rules.sh
 
@@ -30,7 +32,7 @@ bash /usr/lib/udev/init-net-rules.sh
 cd /etc/sysconfig/
 cat > ifconfig.eth0 << "EOF"
 ONBOOT=yes
-IFACE=eth0
+IFACE=wlan0
 SERVICE=ipv4-static
 IP=192.168.1.2
 GATEWAY=192.168.1.1
@@ -189,11 +191,13 @@ EOF
 
 cd /sources
 
+# mv .config /sources/linux-5.19.2/
 # 10.3. Linux-5.19.2
 begin linux-5.19.2 tar.xz
 make mrproper
-make defconfig
+make olddefconfig
 make -j$(nproc)
+make modules
 make modules_install
 cp -iv arch/x86/boot/bzImage /boot/vmlinuz-leakos
 cp -iv System.map /boot/System.map-5.19.2
