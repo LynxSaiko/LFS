@@ -84,8 +84,8 @@ cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
   `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
 finish
 
-# 5.4. Linux-5.19.2 API Headers
-begin linux-5.19.2 tar.xz
+# 5.4. Linux-5.10.195 API Headers
+begin linux-5.10.195 tar.xz
 make mrproper
 make headers
 find usr/include -type f ! -name '*.h' -delete
