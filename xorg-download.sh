@@ -1,5 +1,5 @@
 #!/bin/bash
-# [*] Author: Red Team
+# [*] Author: LynxSaiko
 # [*] Script untuk mengunduh dan mengekstrak semua file dari daftar URL ke /mnt/lfs/xorg
 
 # Direktori untuk menyimpan file yang diunduh dan diekstrak
