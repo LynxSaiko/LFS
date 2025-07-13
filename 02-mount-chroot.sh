@@ -1,7 +1,6 @@
 #!/bin/bash
 mknod -m 600 $LFS/dev/console c 5 1 || true
 mknod -m 666 $LFS/dev/null c 1 3 || true
-mknod -m 666 $LFS/dev/zero c 1 5 || true
 mknod -m 622 $LFS/dev/tty c 5 0 || true
 
 mount -v --bind /dev $LFS/dev
