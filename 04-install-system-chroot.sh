@@ -911,6 +911,7 @@ begin util-linux-2.38.1 tar.xz
             --disable-pylibmount \
             --disable-static     \
             --without-python     \
+	    --enable-terminfo    \
             --without-systemd    \
             --without-systemdsystemunitdir
 make -j$(nproc)
