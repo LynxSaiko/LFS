@@ -22,15 +22,20 @@ finish() {
 }
 
 cd /sources
-
 #install lfs-bootscripts
+begin lfs-bootscripts-20220723 tar.xz
+cd lfs-bootscripts-20220723
+make install
+finish
 
+echo "[*] Custom Udev [*]"
 # 9.4.1.2. Creating Custom Udev Rules
 bash /usr/lib/udev/init-net-rules.sh
 
+echo "[*] Creating Network [*]"
 # 9.5.1. Creating Network Interface Configuration Files
 cd /etc/sysconfig/
-cat > ifconfig.eth0 << "EOF"
+cat > ifconfig.wlan0 << "EOF"
 ONBOOT=yes
 IFACE=wlan0
 SERVICE=ipv4-static
@@ -40,6 +45,7 @@ PREFIX=24
 BROADCAST=192.168.1.255
 EOF
 
+echo "[*] Creating Resolv [*]"
 # 9.5.2. Creating the /etc/resolv.conf File
 cat > /etc/resolv.conf << "EOF"
 # Begin /etc/resolv.conf
@@ -50,6 +56,7 @@ nameserver 8.8.4.4
 # End /etc/resolv.conf
 EOF
 
+echo "[*] Configure System Host [*]"
 # 9.5.3. Configuring the system hostname
 echo "leakos" > /etc/hostname
 
@@ -65,6 +72,7 @@ ff02::2   ip6-allrouters
 # End /etc/hosts
 EOF
 
+echo "[*] Configure Sysinit [*]"
 # 9.6.2. Configuring Sysvinit
 cat > /etc/inittab << "EOF"
 # Begin /etc/inittab
@@ -95,6 +103,7 @@ su:S016:once:/sbin/sulogin
 # End /etc/inittab
 EOF
 
+echo "[*] Configure System Clock [*]"
 # 9.6.4. Configuring the System Clock
 cat > /etc/sysconfig/clock << "EOF"
 # Begin /etc/sysconfig/clock
@@ -108,6 +117,7 @@ CLOCKPARAMS=
 # End /etc/sysconfig/clock
 EOF
 
+echo "[*] Setting Bash Shell [*]"
 # 9.7. The Bash Shell Startup Files
 cat > /etc/profile << "EOF"
 # Begin /etc/profile
@@ -117,6 +127,7 @@ export LANG=en_US.UTF-8
 # End /etc/profile
 EOF
 
+echo "[*] Create Inputrc [*]"
 # 9.8. Creating the /etc/inputrc File
 cat > /etc/inputrc << "EOF"
 # Begin /etc/inputrc
@@ -162,6 +173,7 @@ set bell-style none
 # End /etc/inputrc
 EOF
 
+echo "[*] Create Shells [*]"
 # 9.9. Creating the /etc/shells File
 cat > /etc/shells << "EOF"
 # Begin /etc/shells
@@ -172,6 +184,7 @@ cat > /etc/shells << "EOF"
 # End /etc/shells
 EOF
 
+echo "[*] Create Fstab [*]"
 # 10.2. Creating the /etc/fstab File
 cat > /etc/fstab << "EOF"
 # Begin /etc/fstab
@@ -189,21 +202,20 @@ devtmpfs       /dev         devtmpfs mode=0755,nosuid    0     0
 # End /etc/fstab
 EOF
 
+echo "[*] Config Linux & Grub [*]"
 cd /sources
-
 # mv .config /sources/linux-5.19.2/
-# 10.3. Linux-5.19.2
-begin linux-5.19.2 tar.xz
+# 10.3. Linux-5.10.195
+begin linux-5.10.195 tar.xz
 make mrproper
 make olddefconfig
 make -j$(nproc)
 make modules
 make modules_install
 cp -iv arch/x86/boot/bzImage /boot/vmlinuz-leakos
-cp -iv System.map /boot/System.map-5.19.2
-cp -iv .config /boot/config-5.19.2
-install -d /usr/share/doc/linux-5.19.2
-cp -r Documentation/* /usr/share/doc/linux-5.19.2
+cp -iv System.map /boot/System.map-5.10.195
+cp -iv .config /boot/config-5.10.195
+install -d /usr/share/doc/linux-5.10.195
 finish
 
 cat > /boot/grub/grub.cfg << "EOF"
@@ -215,6 +227,8 @@ menuentry "LeakOS V1 (Shadow Edition)" {
 }
 EOF
 grub-install /dev/sda
+
+echo "[*] Config Modprobe [*]"
 # 10.3.2. Configuring Linux Module Load Order
 install -v -m755 -d /etc/modprobe.d
 cat > /etc/modprobe.d/usb.conf << "EOF"
@@ -226,6 +240,7 @@ install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
 # End /etc/modprobe.d/usb.conf
 EOF
 
+echo "[*] Config Os-release [*]"
 # === Buat /etc/os-release ===
 echo "📝 Membuat /etc/os-release ..."
 cat > /etc/os-release << "EOF"
