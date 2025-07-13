@@ -1,8 +1,8 @@
 #!/bin/bash
 # [*] Author: Red Team
-# [*] Script untuk mengunduh semua file dari daftar URL ke /mnt/lfs/xorg
+# [*] Script untuk mengunduh dan mengekstrak semua file dari daftar URL ke /mnt/lfs/xorg
 
-# Direktori untuk menyimpan file yang diunduh
+# Direktori untuk menyimpan file yang diunduh dan diekstrak
 DOWNLOAD_DIR="/mnt/lfs/xorg"
 
 # Membuat direktori untuk menyimpan file jika belum ada
@@ -93,6 +93,17 @@ urls=(
 for url in "${urls[@]}"; do
     echo "Downloading $url ..."
     wget -P "$DOWNLOAD_DIR" "$url"
+    
+    # Mengekstrak file berdasarkan format
+    if [[ "$url" =~ \.tar\.gz$ ]]; then
+        tar -xvzf "$DOWNLOAD_DIR/$(basename $url)" -C "$DOWNLOAD_DIR"
+    elif [[ "$url" =~ \.tar\.xz$ ]]; then
+        tar -xvJf "$DOWNLOAD_DIR/$(basename $url)" -C "$DOWNLOAD_DIR"
+    elif [[ "$url" =~ \.tgz$ ]]; then
+        tar -xvzf "$DOWNLOAD_DIR/$(basename $url)" -C "$DOWNLOAD_DIR"
+    elif [[ "$url" =~ \.bz2$ ]]; then
+        tar -xvjf "$DOWNLOAD_DIR/$(basename $url)" -C "$DOWNLOAD_DIR"
+    fi
 done
 
-echo "[+] All downloads complete!"
+echo "[+] All downloads and extractions complete!"
