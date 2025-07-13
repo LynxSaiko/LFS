@@ -72,7 +72,7 @@ ff02::2   ip6-allrouters
 # End /etc/hosts
 EOF
 
-echo "[*] Configure Sysinit [*]"
+echo "[*] Configure SysVinit [*]"
 # 9.6.2. Configuring Sysvinit
 cat > /etc/inittab << "EOF"
 # Begin /etc/inittab
