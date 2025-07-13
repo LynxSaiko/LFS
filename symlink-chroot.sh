@@ -24,9 +24,6 @@ ln -sfv /run /var/run
 ln -sfv /run/lock /var/lock
 ln -sv /proc/self/mounts /etc/mtab
 
-# 3. Tentukan hostname default jika belum diset
-HOSTNAME=$(cat /etc/hostname 2>/dev/null || echo "leakos")
-echo "Hostname terdeteksi: $HOSTNAME"
 
 # 4. Buat /etc/hosts dengan hostname
 cat > /etc/hosts << EOF
