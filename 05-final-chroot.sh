@@ -23,7 +23,6 @@ finish() {
 
 cd /sources
 #install lfs-bootscripts
-begin lfs-bootscripts-20220723 tar.xz
 cd lfs-bootscripts-20220723
 make install
 finish
