@@ -20,3 +20,49 @@ finish() {
 	cd /sources
 	rm -rf $package_name
 }
+
+
+cat > /boot/grub/grub.cfg << "EOF"
+set default=0
+set timeout=5
+
+menuentry "LeakOS V1 (Shadow Edition)" {
+    linux /boot/vmlinuz-leakos root=/dev/sda2 ro
+}
+EOF
+grub-install /dev/sda
+
+echo "[*] Config Modprobe [*]"
+# 10.3.2. Configuring Linux Module Load Order
+install -v -m755 -d /etc/modprobe.d
+cat > /etc/modprobe.d/usb.conf << "EOF"
+# Begin /etc/modprobe.d/usb.conf
+
+install ohci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i ohci_hcd ; true
+install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
+
+# End /etc/modprobe.d/usb.conf
+EOF
+
+echo "[*] Config Os-release [*]"
+# === Buat /etc/os-release ===
+echo "📝 Membuat /etc/os-release ..."
+cat > /etc/os-release << "EOF"
+NAME="LeakOS"
+VERSION="V1 (Shadow Edition)"
+ID=leakos
+PRETTY_NAME="LeakOS V1 (Shadow Edition)"
+VERSION_ID="1.0"
+HOME_URL="https://leakos.local"
+EOF
+
+# === Buat /etc/lsb-release ===
+echo "📝 Membuat /etc/lsb-release ..."
+cat > /etc/lsb-release << "EOF"
+DISTRIB_ID=LeakOS
+DISTRIB_RELEASE=1.0
+DISTRIB_CODENAME=shadow
+DISTRIB_DESCRIPTION="LeakOS V1 (Shadow Edition)"
+EOF
+
+echo "✅ os-release dan lsb-release selesai dibuat."
