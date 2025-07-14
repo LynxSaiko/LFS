@@ -3,8 +3,8 @@
 # Date: $(date +%F)
 
 set -e
-sudo apt update
-sudo apt install -y \
+apt update
+apt install -y \
     build-essential flex bison gawk texinfo wget \
     python3 tar git gzip bzip2 xz-utils \
     m4 make patch gcc g++ libc6-dev libc6-dev \
