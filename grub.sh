@@ -20,7 +20,21 @@ finish() {
 	cd /sources
 	rm -rf $package_name
 }
-
+echo "[*] Config Linux & Grub [*]"
+cd /sources
+# mv .config /sources/linux-5.19.2/
+# 10.3. Linux-5.10.195
+begin linux-5.10.195 tar.xz
+make mrproper
+make olddefconfig
+make -j$(nproc)
+make modules
+make modules_install
+cp -iv arch/x86/boot/bzImage /boot/vmlinuz-leakos
+cp -iv System.map /boot/System.map-5.10.195
+cp -iv .config /boot/config-5.10.195
+install -d /usr/share/doc/linux-5.10.195
+finish
 
 cat > /boot/grub/grub.cfg << "EOF"
 set default=0
