@@ -10,7 +10,7 @@ fi
 DISK="/dev/sda"
 
 # Tentukan partisi LFS
-PARTITION_LFS="/dev/sda1"
+PARTITION_LFS="/dev/sda2"
 
 # 1. Jalankan cfdisk untuk mempartisi disk
 echo "Memulai cfdisk untuk mempartisi disk $DISK"
@@ -22,7 +22,7 @@ mkfs.ext4 $PARTITION_LFS
 
 # 3. Membuat Mount Point untuk LFS
 echo "Membuat mount point untuk LFS di /mnt/lfs..."
-mkdir -p /mnt/lfs
+mkdir -pv /mnt/lfs
 
 # 4. Mount Partisi LFS
 echo "Mount partisi $PARTITION_LFS ke /mnt/lfs..."
