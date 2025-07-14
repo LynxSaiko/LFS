@@ -4,7 +4,6 @@ export LFS=/mnt/lfs
 export LFS_TGT=$(uname -m)-lfs-linux-gnu
 export PATH="$LFS/tools/bin:/bin:/usr/bin:$PATH"
 unset CXX CC AR AS LD RANLIB STRIP
-cd sources
 
 package_name=""
 package_ext=""
@@ -13,14 +12,14 @@ begin() {
 	package_name=$1
 	package_ext=$2
 
-	echo "[lfs-cross] Starting build of $package_name at $(date)"
+	echo "Starting build of $package_name at $(date)"
 
 	tar xf $package_name.$package_ext
 	cd $package_name
 }
 
 finish() {
-	echo "[lfs-cross] Finishing build of $package_name at $(date)"
+	echo "Finishing build of $package_name at $(date)"
 
 	cd $LFS/sources
 	rm -rf $package_name
