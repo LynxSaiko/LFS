@@ -87,6 +87,7 @@ urls=(
     "https://invisible-mirror.net/archives/xterm/xterm-372.tgz"
     "https://www.x.org/pub/individual/app/xclock-1.1.1.tar.xz"
     "https://www.x.org/pub/individual/app/xinit-1.4.1.tar.bz2"
+    "https://ftp.gnu.org/gnu/nano/nano-5.9.tar.xz"
 )
 
 # Unduh file-file menggunakan wget
