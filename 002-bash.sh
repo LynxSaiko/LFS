@@ -1,7 +1,4 @@
 #!/bin/bash
-LFS=/mnt/lfs
-ROOTDIR=$LFS/root
-
 cat > ~/.bashrc << "EOF"
 set +h
 umask 022
@@ -20,21 +17,3 @@ exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 EOF
 
 source ~/.bashrc
-
-
-echo "[+] Membuat /root/.bash_profile..."
-cat > $ROOTDIR/.bash_profile << "EOF"
-exec env -i HOME=/root TERM=$TERM PS1='(lfs) \u:\w\$ ' /bin/bash --login
-EOF
-
-echo "[+] Membuat /root/.bashrc..."
-cat > $ROOTDIR/.bashrc << "EOF"
-set +h
-umask 022
-LFS=/mnt/lfs
-LC_ALL=POSIX
-LFS_TGT=$(uname -m)-lfs-linux-gnu
-PATH="$LFS/tools/bin:/bin:/usr/bin:$PATH"
-export LFS LC_ALL LFS_TGT PATH MAKEFLAGS
-EOF
-source ~/.bash_profile
