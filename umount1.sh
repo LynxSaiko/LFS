@@ -1,34 +1,32 @@
 #!/bin/bash
-# Script untuk menghapus folder literal {dev,proc,sys,run} dengan aman
-# Tidak akan menghapus folder asli dev, proc, sys, run
+TARGET="/mnt/lfs/{dev,proc,sys,run}"
 
-TARGET="{dev,proc,sys,run}"
+echo "[INFO] Mengecek folder literal..."
+if [ ! -d "$TARGET" ]; then
+    echo "[OK] Folder literal tidak ditemukan."
+    exit 0
+fi
 
-echo "[INFO] Mengecek keberadaan folder literal: $TARGET"
+echo "[FOUND] Folder literal ditemukan: $TARGET"
 
-if [ -d "$TARGET" ]; then
-    echo "[FOUND] Folder literal ditemukan di $(pwd)"
-    
-    # Pastikan tidak sedang ada mount di dalam folder ini
-    echo "[INFO] Mengecek mount point di dalam folder..."
-    MOUNTS=$(mount | grep "$TARGET" | awk '{print $3}' | sort -r)
-    
-    if [ -n "$MOUNTS" ]; then
-        echo "[INFO] Ditemukan mount point di bawah $TARGET, melakukan umount..."
-        for M in $MOUNTS; do
-            echo "  - Umount $M"
-            umount -l "$M"
-        done
-    fi
-    
-    echo "[INFO] Menghapus folder literal $TARGET..."
-    rm -rf "$TARGET"
-    
-    if [ ! -d "$TARGET" ]; then
-        echo "[SUCCESS] Folder literal {dev,proc,sys,run} berhasil dihapus!"
-    else
-        echo "[ERROR] Gagal menghapus folder literal!"
-    fi
+echo "[INFO] Mengecek mount point di dalam folder..."
+MOUNTS=$(mount | grep "$TARGET" | awk '{print $3}' | sort -r)
+
+if [ -n "$MOUNTS" ]; then
+    echo "[INFO] Ditemukan mount point, melakukan umount satu per satu..."
+    for M in $MOUNTS; do
+        echo "  - Umount $M"
+        umount -l "$M"
+    done
 else
-    echo "[OK] Folder literal {dev,proc,sys,run} tidak ditemukan."
+    echo "[OK] Tidak ada mount point."
+fi
+
+echo "[INFO] Menghapus folder literal..."
+rm -rf "$TARGET"
+
+if [ ! -d "$TARGET" ]; then
+    echo "[SUCCESS] Folder literal berhasil dihapus!"
+else
+    echo "[ERROR] Folder masih ada, periksa manual!"
 fi
