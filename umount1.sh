@@ -1,32 +1,41 @@
 #!/bin/bash
-TARGET="/mnt/lfs/{dev,proc,sys,run}"
+# Script untuk membersihkan semua bind mount LFS dan menghapus folder literal brace expansion
+# Pastikan dijalankan sebagai root
 
-echo "[INFO] Mengecek folder literal..."
-if [ ! -d "$TARGET" ]; then
-    echo "[OK] Folder literal tidak ditemukan."
-    exit 0
-fi
+LFS="/mnt/lfs"
+BRACE_FOLDER="$LFS/{dev,proc,sys,run}"
 
-echo "[FOUND] Folder literal ditemukan: $TARGET"
+echo "[INFO] Membersihkan mount bind di $LFS"
+echo "==========================================="
 
-echo "[INFO] Mengecek mount point di dalam folder..."
-MOUNTS=$(mount | grep "$TARGET" | awk '{print $3}' | sort -r)
+# Cari semua mount di bawah /mnt/lfs dan urutkan dari paling dalam
+MOUNTS=$(mount | grep "$LFS" | awk '{print $3}' | sort -r)
 
-if [ -n "$MOUNTS" ]; then
-    echo "[INFO] Ditemukan mount point, melakukan umount satu per satu..."
+if [ -z "$MOUNTS" ]; then
+    echo "[OK] Tidak ada mount di bawah $LFS."
+else
+    echo "[INFO] Ditemukan mount point:"
+    echo "$MOUNTS"
+    echo "[INFO] Melakukan umount semua mount point..."
     for M in $MOUNTS; do
         echo "  - Umount $M"
         umount -l "$M"
     done
-else
-    echo "[OK] Tidak ada mount point."
 fi
 
-echo "[INFO] Menghapus folder literal..."
-rm -rf "$TARGET"
-
-if [ ! -d "$TARGET" ]; then
-    echo "[SUCCESS] Folder literal berhasil dihapus!"
+echo "==========================================="
+echo "[INFO] Mengecek folder literal brace expansion..."
+if [ -d "$BRACE_FOLDER" ]; then
+    echo "[FOUND] Folder literal $BRACE_FOLDER ditemukan, menghapus..."
+    rm -rf "$BRACE_FOLDER"
+    if [ ! -d "$BRACE_FOLDER" ]; then
+        echo "[SUCCESS] Folder literal berhasil dihapus!"
+    else
+        echo "[ERROR] Gagal menghapus folder literal!"
+    fi
 else
-    echo "[ERROR] Folder masih ada, periksa manual!"
+    echo "[OK] Folder literal tidak ditemukan."
 fi
+
+echo "==========================================="
+echo "[DONE] Semua mount telah dibersihkan dan folder brace dicek."
