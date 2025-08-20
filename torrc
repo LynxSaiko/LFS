@@ -1,0 +1,27 @@
+# Network settings
+VirtualAddrNetwork 10.192.0.0/10
+AutomapHostsOnResolve 1
+TransPort 9040
+DNSPort 5353
+
+SocksPort 9050
+DNSListenAddress 127.0.0.1
+TransListenAddress 127.0.0.1
+AutomapHostsSuffixes .exit,.onion
+
+# Additional settings
+HardwareAccel 1
+TestSocks 1
+WarnUnsafeSocks 1
+AllowNonRFC953Hostnames 0
+AllowDotExit 0
+
+ClientRejectInternalAddresses 1
+
+# Circuit settings
+NewCircuitPeriod 40
+MaxCircuitDirtiness 600
+MaxClientCircuitsPending 48
+UseEntryGuards 1
+UseEntryGuardsAsDirGuards 1
+EnforceDistinctSubnets 1
