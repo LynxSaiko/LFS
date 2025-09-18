@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: NSS
+Description: Network Security Services
+Version: 3.82
+Cflags: -I${includedir}/nss
+Libs: -L${libdir} -lnss3 -lssl3 -lpkcs11
