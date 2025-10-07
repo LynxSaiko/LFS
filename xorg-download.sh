@@ -11,8 +11,8 @@ mkdir -pv "$DOWNLOAD_DIR"
 # Daftar URL yang akan diunduh
 urls=(
     "https://github.com/lfs-book/make-ca/releases/download/v1.10/make-ca-1.10.tar.xz"
-    "https://github.com/p11-glue/p11-kit/releases/download/0.24.1/p11-kit-0.24.1.tar.xz"
     "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.18.0.tar.gz"
+    "https://github.com/p11-glue/p11-kit/releases/download/0.24.1/p11-kit-0.24.1.tar.xz"
     "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.7/gnutls-3.7.7.tar.xz"
     "https://ftp.gnu.org/gnu/nettle/nettle-3.8.1.tar.gz"
     "https://ftp.gnu.org/gnu/libunistring/libunistring-1.0.tar.xz"
@@ -44,6 +44,7 @@ urls=(
     "https://www.linuxfromscratch.org/patches/blfs/11.2/unzip-6.0-consolidated_fixes-1.patch"
     "https://downloads.sourceforge.net/infozip/zip30.tar.gz"
     "https://roy.marples.name/downloads/dhcpcd/dhcpcd-9.4.1.tar.xz"
+    "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/llvm-14.0.6.src.tar.xz"
     "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/clang-14.0.6.src.tar.xz"
     "https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/compiler-rt-14.0.6.src.tar.xz"
     "https://www.linuxfromscratch.org/patches/blfs/11.2/compiler-rt-14.0.6-glibc_2_36-1.patch"
@@ -54,7 +55,7 @@ urls=(
     "https://github.com/thkukuk/libnsl/releases/download/v2.0.0/libnsl-2.0.0.tar.xz"
     "https://www.tcpdump.org/release/libpcap-1.10.1.tar.gz"
     "https://www.x.org/pub/individual/util/util-macros-1.19.3.tar.bz2"
-    "https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2022.2.tar.xz"
+    "https://www.x.org/archive/individual/proto/xorgproto-2024.1.tar.xz"
     "https://www.x.org/pub/individual/lib/libXau-1.0.9.tar.bz2"
     "https://www.x.org/pub/individual/lib/libXdmcp-1.1.3.tar.bz2"
     "https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-1.15.2.tar.xz"
@@ -88,6 +89,7 @@ urls=(
     "https://www.x.org/pub/individual/app/xclock-1.1.1.tar.xz"
     "https://www.x.org/pub/individual/app/xinit-1.4.1.tar.bz2"
     "https://ftp.gnu.org/gnu/nano/nano-5.9.tar.xz"
+    "https://github.com/seccomp/libseccomp/releases/download/v2.5.4/libseccomp-2.5.4.tar.gz"
 )
 
 # Unduh file-file menggunakan wget
