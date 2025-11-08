@@ -1,0 +1,61 @@
+#!/bin/sh
+# Begin $rc_base/init.d/zramswap
+
+# Ganti nilai ini sesuai kebutuhan:
+# SIZE: Ukuran maksimum zram (dalam byte, misal 1G, 512M). Disarankan 50% hingga 100% dari RAM fisik.
+# COMPRESSOR: Algoritma kompresi (misal lz4, zstd).
+# PRIORITY: Prioritas swap. Angka yang lebih tinggi berarti lebih diutamakan.
+
+SIZE="4G"  # Contoh: 2GB
+COMPRESSOR="zstd" # Atau "lz4" untuk performa cepat
+ZRAM_DEV="/dev/zram0"
+
+start() {
+    echo "Memulai zram swap..."
+    if [ ! -d /sys/block/zram0 ]; then
+        modprobe zram num_devices=1
+    fi
+
+    # Set algoritma kompresi (pastikan didukung kernel)
+    echo $COMPRESSOR > /sys/block/zram0/comp_algorithm
+
+    # Set ukuran disk
+    echo $SIZE > /sys/block/zram0/disksize
+
+    # Buat header swap
+    mkswap -L zramswap $ZRAM_DEV
+
+    # Aktifkan swap dengan prioritas tinggi
+    swapon -p 100 $ZRAM_DEV
+    echo "zram swap telah diaktifkan di $ZRAM_DEV dengan ukuran $SIZE."
+}
+
+stop() {
+    echo "Menghentikan zram swap..."
+    swapoff $ZRAM_DEV
+    # Hapus perangkat zram
+    echo 1 > /sys/block/zram0/reset
+    echo "zram swap telah dinonaktifkan."
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        swapon --summary | grep $ZRAM_DEV || echo "$ZRAM_DEV tidak aktif."
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+
+# End $rc_base/init.d/zramswap
