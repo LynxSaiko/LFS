@@ -21,5 +21,5 @@ fi
 
 # Tampilkan ukuran file
 du -h "$FILENAME"
-tar -xf lfs-packages-11.2.tar && mv 11.2-rc1 sources && mv sources $LFS
+tar -xvf lfs-packages-11.2.tar && mv 11.2-rc1 sources && mv sources $LFS
 chmod -v a+wt $LFS/sources
